@@ -17,29 +17,19 @@ public class FlatMap<T> implements Iterator<T> {
 
   @Override
   public boolean hasNext() {
-    boolean temp = false;
-    while (data.hasNext() || cursor.hasNext()) {
-      if (cursor.hasNext()) {
-        temp = true;
-        break;
-      }
+    while (data.hasNext() && !cursor.hasNext()) {
       cursor = data.next();
     }
-    return temp;
+    return cursor.hasNext();
   }
 
   @Override
   public T next() {
-    if (cursor.hasNext()) {
-      return cursor.next();
-    } else {
-      cursor = data.next();
-      if (cursor.hasNext()) {
-        return cursor.next();
-      } else {
-        throw new NoSuchElementException();
-      }
+    if (!hasNext()) {
+      throw new NoSuchElementException();
     }
+    return cursor.next();
+
   }
 
   public static void main(String[] args) {

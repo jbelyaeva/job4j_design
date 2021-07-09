@@ -38,7 +38,7 @@ public class SimpleArray<T> implements Iterable<T> {
     Objects.checkIndex(index, array.length);
     return array[index];
   }
-  
+
   @Override
   public Iterator<T> iterator() {
 
@@ -57,4 +57,5 @@ public class SimpleArray<T> implements Iterable<T> {
       }
     };
   }
+  
 }

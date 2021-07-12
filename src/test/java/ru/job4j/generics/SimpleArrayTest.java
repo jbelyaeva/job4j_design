@@ -2,8 +2,6 @@ package ru.job4j.generics;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -12,7 +10,8 @@ public class SimpleArrayTest {
   @Test
   public void addElement() {
     SimpleArray<Integer> simpleArray = new SimpleArray<>(5);
-    assertThat(simpleArray.add(1), is(true));
+    simpleArray.add(1);
+    assertThat(simpleArray.get(0), is(1));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
@@ -63,7 +62,6 @@ public class SimpleArrayTest {
     simpleArray.remove(1);
     assertThat(simpleArray.get(0), is(1));
     assertThat(simpleArray.get(1), is(3));
-    Assert.assertNull(simpleArray.get(2));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)

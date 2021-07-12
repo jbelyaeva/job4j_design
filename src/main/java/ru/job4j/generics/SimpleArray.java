@@ -13,29 +13,23 @@ public class SimpleArray<T> implements Iterable<T> {
     array = (T[]) new Object[count];
   }
 
-  public Boolean add(T model) {
-    Objects.checkIndex(point, array.length - 1);
-    int i = 0;
-    while (array[i] != null && i != array.length - 1) {
-      i++;
-    }
-    array[i] = model;
-    return true;
+  public void add(T model) {
+    array[point++] = model;
   }
 
   public void set(int index, T model) {
-    Objects.checkIndex(index, array.length);
+    Objects.checkIndex(index, point);
     array[index] = model;
   }
 
   public void remove(int index) {
-    Objects.checkIndex(index, array.length);
+    Objects.checkIndex(index, point);
     System.arraycopy(array, index + 1, array, index, array.length - index - 1);
-    array[array.length - 1] = null;
+    point--;
   }
 
   public T get(int index) {
-    Objects.checkIndex(index, array.length);
+    Objects.checkIndex(index, point);
     return array[index];
   }
 
@@ -43,9 +37,10 @@ public class SimpleArray<T> implements Iterable<T> {
   public Iterator<T> iterator() {
 
     return new Iterator<T>() {
+      private int it = 0;
       @Override
       public boolean hasNext() {
-        return point < array.length;
+        return it < point;
       }
 
       @Override
@@ -53,9 +48,9 @@ public class SimpleArray<T> implements Iterable<T> {
         if (!hasNext()) {
           throw new NoSuchElementException();
         }
-        return array[point++];
+        return array[it++];
       }
     };
   }
-  
+
 }

@@ -33,7 +33,7 @@ public class SimpleArray<T> implements Iterable<T> {
   }
 
   private Object[] grow() {
-    return elementData = Arrays.copyOf(elementData, size + 1);
+    return elementData = Arrays.copyOf(elementData, size * 2);
   }
 
   @Override

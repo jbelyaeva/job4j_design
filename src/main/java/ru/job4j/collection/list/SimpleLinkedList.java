@@ -65,12 +65,9 @@ public class SimpleLinkedList<E> implements List<E> {
 
   public Node<E> searchNode(int index) {
     Node<E> elem = null;
-    if (index <= (size >> 1)) {
-      elem = firstElement;
       for (int i = 0; i < index; i++) {
         elem = elem.nextElement;
       }
-    }
     return elem;
   }
 

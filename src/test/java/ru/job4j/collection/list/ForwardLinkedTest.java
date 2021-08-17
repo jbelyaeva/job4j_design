@@ -17,6 +17,15 @@ public class ForwardLinkedTest {
     linked.iterator().next();
   }
 
+  @Test
+  public void whenAddFirst() {
+    ForwardLinked<Integer> linked = new ForwardLinked<>();
+    linked.addFirst(1);
+    linked.addFirst(2);
+    Iterator<Integer> it = linked.iterator();
+    assertThat(it.next(), is(2));
+  }
+
   @Test(expected = NoSuchElementException.class)
   public void whenDeleteEmptyLinked() {
     ForwardLinked<Integer> linked = new ForwardLinked<>();

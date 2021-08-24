@@ -1,6 +1,7 @@
 package ru.job4j.it;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,9 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.Test;
-import static org.hamcrest.Matchers.is;
 
-public class FlatMapTest{
+public class FlatMapTest {
+
   @Test
   public void whenDiffNext() {
     Iterator<Iterator<Integer>> data = List.of(

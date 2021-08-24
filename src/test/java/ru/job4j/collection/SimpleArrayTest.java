@@ -3,13 +3,13 @@ package ru.job4j.collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.junit.Test;
 
 public class SimpleArrayTest {
+
   @Test
   public void whenAddThenGet() {
     SimpleArray<String> array = new SimpleArray<>();

@@ -7,6 +7,7 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 
 public class SimpleLinkedListTest {
+
   @Test
   public void whenAddAndGet() {
     List<Integer> list = new SimpleLinkedList<>();
@@ -16,7 +17,8 @@ public class SimpleLinkedListTest {
     assertThat(list.get(1), Is.is(2));
   }
 
- void whenGetFromOutOfBoundThenExceptionThrown() {
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void whenGetFromOutOfBoundThenExceptionThrown() {
     List<Integer> list = new SimpleLinkedList<>();
     list.add(1);
     list.add(2);
@@ -43,5 +45,4 @@ public class SimpleLinkedListTest {
     assertThat(second.next(), Is.is(2));
     assertThat(second.hasNext(), Is.is(false));
   }
-
 }

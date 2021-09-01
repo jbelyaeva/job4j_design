@@ -14,7 +14,6 @@ public class SimpleSetTest {
     assertFalse(set.add(1));
   }
 
-
   @Test
   public void whenAddNull() {
     Set<Integer> set = new SimpleSet<>();

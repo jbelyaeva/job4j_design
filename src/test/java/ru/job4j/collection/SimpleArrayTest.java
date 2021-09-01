@@ -66,6 +66,16 @@ public class SimpleArrayTest {
   }
 
   @Test
+  public void whenSize() {
+    SimpleArray<String> array = new SimpleArray<>();
+    array.add("first");
+    array.add("second");
+    array.add("third");
+    array.add("fourth");
+    assertThat(array.size(), is(4));
+  }
+
+  @Test
   public void whenAddNull() {
     SimpleArray<String> array = new SimpleArray<>();
     array.add(null);

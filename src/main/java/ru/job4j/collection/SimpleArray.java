@@ -23,6 +23,10 @@ public class SimpleArray<T> implements Iterable<T> {
     return (T) elementData[index];
   }
 
+  public int size() {
+    return size;
+  }
+
   public void add(T model) {
     modCount++;
     if (size == elementData.length) {
@@ -38,7 +42,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
   @Override
   public Iterator<T> iterator() {
-    return new Iterator<T>() {
+    return new Iterator<>() {
       private int point = 0;
       private int expectedModCount = modCount;
 

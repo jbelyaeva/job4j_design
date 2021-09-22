@@ -42,7 +42,7 @@ public class SimpleMapTest {
     map.put(7, "3");
     map.put(8, "3");
     map.put(9, "3");
-    map.put(10,"3");
+    map.put(10, "3");
     assertThat(map.size(), is(9));
   }
 
@@ -69,7 +69,7 @@ public class SimpleMapTest {
   public void getErrorKey() {
     SimpleMap<Integer, String> map = new SimpleMap<>();
     map.put(1, "1");
-    assertThat(map.get(2),nullValue());
+    assertThat(map.get(2), nullValue());
   }
 
   @Test

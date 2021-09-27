@@ -7,19 +7,26 @@ import java.util.NoSuchElementException;
 public class SimpleMap<K, V> implements Map<K, V> {
 
   private static final float LOAD_FACTOR = 0.75f;
-
   private final int capacity = 8;
+  private MapEntry<K, V>[] table;
 
-  private int count = 0;
+  private int count;
 
-  private int modCount = 0;
+  private int maxLoad;
 
-  private MapEntry<K, V>[] table = new MapEntry[capacity];
+  private int modCount;
+
+  public SimpleMap() {
+    this.table = new MapEntry[capacity];
+    this.count = 0;
+    this.modCount = 0;
+    this.maxLoad = (int) (capacity * LOAD_FACTOR);
+  }
 
   @Override
   public boolean put(K key, V value) {
     int index = this.indexCalc(key);
-    if (count >= table.length) {
+    if (count >= maxLoad) {
       expand();
     }
     if (table[index] == null) {
@@ -33,7 +40,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
       return false;
     }
     elem.setValue(value);
-    modCount++;
     return true;
   }
 
@@ -58,20 +64,21 @@ public class SimpleMap<K, V> implements Map<K, V> {
   }
 
   private void expand() {
-    if (count == table.length) {
-      int newSize = (int) (table.length * LOAD_FACTOR);
-      MapEntry<K, V>[] newContainer = new MapEntry[table.length + newSize];
-      System.arraycopy(table, 0, newContainer, 0, table.length);
-      table = newContainer;
-      modCount++;
+    int newSize = (int) (table.length * LOAD_FACTOR);
+    MapEntry<K, V>[] newContainer = new MapEntry[table.length + newSize];
+    for (int i = 1; i <= count; i++) {
+      MapEntry<K, V> elem = table[i];
+      newContainer[i] = new MapEntry<>(elem.key, elem.value);
     }
+    table = newContainer;
+    modCount++;
   }
 
   @Override
   public V get(K key) {
     int index = this.indexCalc(key);
     MapEntry<K, V> elem = table[index];
-    if (elem != null) {
+    if ((elem != null) && (elem.getKey().equals(key))) {
       return elem.getValue();
     }
     return null;
@@ -81,7 +88,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
   public boolean remove(K key) {
     int index = this.indexCalc(key);
     MapEntry<K, V> elem = table[index];
-    if (elem != null) {
+    if ((elem != null) && (elem.getKey().equals(key))) {
       table[index] = null;
       count--;
       modCount++;

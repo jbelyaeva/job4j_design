@@ -43,7 +43,7 @@ public class SimpleMapTest {
     map.put(8, "3");
     map.put(9, "3");
     map.put(10, "3");
-    assertThat(map.size(), is(9));
+    assertThat(map.size(), is(10));
   }
 
   @Test(expected = NoSuchElementException.class)

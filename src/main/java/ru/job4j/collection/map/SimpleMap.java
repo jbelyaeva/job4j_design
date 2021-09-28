@@ -12,7 +12,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
   private int count;
 
-  private int maxLoad;
+  private int threshold;
 
   private int modCount;
 
@@ -20,15 +20,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
     this.table = new MapEntry[capacity];
     this.count = 0;
     this.modCount = 0;
-    this.maxLoad = (int) (capacity * LOAD_FACTOR);
+    this.threshold = (int) (capacity * LOAD_FACTOR);
   }
 
   @Override
   public boolean put(K key, V value) {
-    int index = this.indexCalc(key);
-    if (count >= maxLoad) {
+    if (count >= threshold) {
       expand();
     }
+    int index = this.indexCalc(key);
     if (table[index] == null) {
       table[index] = new MapEntry<>(key, value);
       modCount++;
@@ -66,9 +66,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
   private void expand() {
     int newSize = (int) (table.length * LOAD_FACTOR);
     MapEntry<K, V>[] newContainer = new MapEntry[table.length + newSize];
-    for (int i = 1; i <= count; i++) {
+    for (int i = 0; i < table.length; i++) {
       MapEntry<K, V> elem = table[i];
-      newContainer[i] = new MapEntry<>(elem.key, elem.value);
+      if (elem != null) {
+        newContainer[i] = new MapEntry<>(elem.key, elem.value);
+      }
     }
     table = newContainer;
     modCount++;
@@ -153,3 +155,4 @@ public class SimpleMap<K, V> implements Map<K, V> {
   }
 
 }
+

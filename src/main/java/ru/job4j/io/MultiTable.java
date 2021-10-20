@@ -17,5 +17,4 @@ public class MultiTable {
       e.printStackTrace();
     }
   }
-
 }

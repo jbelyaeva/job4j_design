@@ -6,10 +6,14 @@ public class MultiTable {
 
   public static void main(String[] args) {
     try (FileOutputStream out = new FileOutputStream("result.txt")) {
-      for (int i = 1; i < 10; i++) {
-        for (int j = 1; j < 10; j++) {
-          out.write((i + "x" + j + "=" + i * j).getBytes());
-          out.write(System.lineSeparator().getBytes());
+      for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+          int res = i * j;
+          if (res <= 9) {
+            out.write((i + "x" + j + "=" + res + ";  ").getBytes());
+          } else {
+            out.write((i + "x" + j + "=" + res + "; ").getBytes());
+          }
         }
         out.write(System.lineSeparator().getBytes());
       }

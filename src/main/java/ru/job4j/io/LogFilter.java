@@ -7,15 +7,13 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LogFilter {
 
   public static List<String> filter(String file) {
     List<String> log = new ArrayList<>();
-    try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
-      List<String> lines = in.lines().collect(Collectors.toCollection(ArrayList::new));
-      for (String line : lines) {
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+      for (String line = in.readLine(); line != null; line = in.readLine()) {
         String res = line.split("\"")[2].trim().split(" ")[0];
         if (res.equals("404")) {
           log.add(line);

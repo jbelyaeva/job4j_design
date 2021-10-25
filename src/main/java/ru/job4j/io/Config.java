@@ -34,7 +34,7 @@ public class Config {
       e.printStackTrace();
     }
     if (temp) {
-      throw new IllegalArgumentException("Error config structure!");
+      throw new IllegalArgumentException("Error config structure!!");
     }
   }
 

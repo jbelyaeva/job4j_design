@@ -32,8 +32,29 @@ public class ConfigTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void whenErrorConfig() {
-    String path = "./data/config_error.properties";
+  public void whenErrorConfigWithoutKey() {
+    String path = "./data/config_error_without_key.properties";
+    Config config = new Config(path);
+    config.load();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void whenErrorConfigWithoutEquals() {
+    String path = "./data/config_error_without_equals.properties";
+    Config config = new Config(path);
+    config.load();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void whenErrorConfigTwoEquals() {
+    String path = "./data/config_error_two_equals.properties";
+    Config config = new Config(path);
+    config.load();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void whenErrorConfigWithoutValue() {
+    String path = "./data/config_error_without_value.properties";
     Config config = new Config(path);
     config.load();
   }

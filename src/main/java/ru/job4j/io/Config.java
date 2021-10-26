@@ -24,11 +24,11 @@ public class Config {
           continue;
         }
         String[] res = line.split("=");
-        if (res[0].length() == 0) {
+        if (res[0].length() == 0 || !line.contains("=") || res.length != 2) {
           temp = true;
           break;
         }
-        values.put(res[0], res.length == 1 ? null : res[1]);
+        values.put(res[0], res[1]);
       }
     } catch (Exception e) {
       e.printStackTrace();

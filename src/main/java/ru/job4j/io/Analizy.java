@@ -28,7 +28,10 @@ public class Analizy {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    recordInFile(target, result);
+  }
 
+  private static void recordInFile(String target, List<String> result) {
     try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
       for (String s : result) {
         out.println(s);

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Analizy {
 
-  private static void unavailable(String source, String target) {
+  public static void unavailable(String source, String target) {
     List<String> result = new ArrayList<>();
     try (BufferedReader in = new BufferedReader(new FileReader(source))) {
       int temp = 0;
@@ -18,10 +18,12 @@ public class Analizy {
         String[] res = line.split(" ");
         if (temp == 0 && (res[0].equals("400") || res[0].equals("500"))) {
           str = res[1];
+          result.add(str);
           temp++;
         }
         if (res[0].equals("200") && temp != 0) {
-          result.add(str + ";" + res[1]);
+          int lastIndex = result.size() - 1;
+          result.set(lastIndex, result.get(lastIndex) + ";" + res[1]);
           temp = 0;
         }
       }

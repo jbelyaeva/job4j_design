@@ -11,12 +11,12 @@ public class Search {
 
   public static void main(String[] args) throws IOException {
     Path start = Paths.get(args[0]);
-    validations(args, start);
+    validations(args, start, 2);
     search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
   }
 
-  private static void validations(String[] args, Path start) {
-    if (args.length != 2) {
+  public static void validations(String[] args, Path start, int countArgs) {
+    if (args.length != countArgs) {
       throw new IllegalArgumentException(
           "Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
     }

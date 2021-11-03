@@ -16,12 +16,14 @@ public class ArgsName {
       throw new IllegalArgumentException("Not found any arguments");
     }
     for (String a : args) {
-      String[] masFirst = a.split("=");
-      if (!a.contains("=") || masFirst.length != 2) {
-        throw new IllegalArgumentException("Illegal arguments");
+      if (!a.startsWith("-") || !a.contains("=")) {
+        throw new IllegalArgumentException("Not found any arguments");
       }
-      String[] masSecond = masFirst[0].split("-");
-      values.put(masSecond[1], masFirst[1]);
+      String[] res = a.replaceAll("=", " ").split(" ");
+      if (res.length != 2 || res[0].length() < 2 || res[1].length() == 0) {
+        throw new IllegalArgumentException("Not found any arguments");
+      }
+      values.put(res[0].split("-")[1], res[1]);
     }
   }
 

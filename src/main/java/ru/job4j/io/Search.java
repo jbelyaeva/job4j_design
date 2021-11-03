@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,17 +11,17 @@ import java.util.function.Predicate;
 public class Search {
 
   public static void main(String[] args) throws IOException {
-    Path start = Paths.get(args[0]);
-    validations(args, start, 2);
-    search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
+    validations(args, 2);
+    search(Paths.get(args[0]), p -> p.toFile().getName().endsWith(args[1]))
+        .forEach(System.out::println);
   }
 
-  public static void validations(String[] args, Path start, int countArgs) {
+  public static void validations(String[] args, int countArgs) {
     if (args.length != countArgs) {
-      throw new IllegalArgumentException(
-          "Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+      throw new IllegalArgumentException("Not all args");
     }
-    if (!start.toFile().isDirectory()) {
+    File file = new File(args[0]);
+    if (!file.isDirectory()) {
       throw new IllegalArgumentException("Directory is wrong");
     }
   }

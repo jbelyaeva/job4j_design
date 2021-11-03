@@ -34,7 +34,7 @@ public class Zip {
     ArgsName jvm = ArgsName.of(args);
     Path target = Paths.get(jvm.get("o"));
     Path start = Paths.get(jvm.get("d"));
-    validations(args, start, args.length);
+    validations(args, 3);
     List<Path> files = search(start,
         p -> !p.toFile().getName().endsWith(Paths.get(jvm.get("e")).toString()));
     packFiles(files, target);

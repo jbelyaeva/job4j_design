@@ -15,11 +15,11 @@ public class ArgsName {
     if (args.length == 0) {
       throw new IllegalArgumentException("Not found any arguments");
     }
-    for (String a : args) {
-      if (!a.startsWith("-") || !a.contains("=")) {
+    for (String arg : args) {
+      if (!arg.startsWith("-") || !arg.contains("=")) {
         throw new IllegalArgumentException("Not found any arguments");
       }
-      String[] res = a.replaceAll("=", " ").split(" ");
+      String[] res = arg.replaceAll("=", " ").split(" ");
       if (res.length != 2 || res[0].length() < 2 || res[1].length() == 0) {
         throw new IllegalArgumentException("Not found any arguments");
       }

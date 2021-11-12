@@ -19,7 +19,7 @@ public class ArgsName {
       if (!arg.startsWith("-") || !arg.contains("=")) {
         throw new IllegalArgumentException("Not found any arguments");
       }
-      String[] res = arg.replaceAll("=", " ").split(" ");
+      String[] res = arg.split("=");
       if (res.length != 2 || res[0].length() < 2 || res[1].length() == 0) {
         throw new IllegalArgumentException("Not found any arguments");
       }

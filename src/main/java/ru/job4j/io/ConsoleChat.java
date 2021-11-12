@@ -33,9 +33,9 @@ public class ConsoleChat {
         new InputStreamReader(System.in))) {
       String line = reader.readLine();
       log.add(line);
-      while (!line.equals(OUT)) {
+      while (!OUT.equals(line)) {
         if (!isPausa(line)) {
-          String answer = answers.get(new Random().nextInt(answers.size() - 1));
+          String answer = answers.get(new Random().nextInt(answers.size()));
           System.out.println(answer);
           log.add(answer);
         }
@@ -49,10 +49,10 @@ public class ConsoleChat {
   }
 
   private boolean isPausa(String line) {
-    if (line.equals(STOP)) {
+    if (STOP.equals(line)) {
       pause = true;
     }
-    if (line.equals(CONTINUE)) {
+    if (CONTINUE.equals(line)) {
       pause = false;
     }
     return pause;

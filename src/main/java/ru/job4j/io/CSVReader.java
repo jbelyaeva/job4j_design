@@ -21,7 +21,6 @@ public class CSVReader {
     List<Integer> indexes = parseFilter(argsName, tableIndex);
     List<List<String>> mas = getResultAfterFilter(tableIndex, result, indexes);
     StringBuilder builder = getStringBuilder(mas);
-
     if (argsName.get("out").equals("stdout")) {
       recordInConsole(builder);
     } else {
@@ -54,7 +53,7 @@ public class CSVReader {
         temp.add(a);
       } else {
         List<String> a = IntStream.range(0, result.size())
-            .filter(n -> (n + tableIndex.size() - indexes.get(finalI)) % 4 == 0) //1
+            .filter(n -> (n + tableIndex.size() - indexes.get(finalI)) % 4 == 0) 
             .mapToObj(result::get)
             .collect(Collectors.toList());
         temp.add(a);

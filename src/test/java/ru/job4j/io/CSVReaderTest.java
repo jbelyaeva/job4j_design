@@ -135,4 +135,29 @@ public class CSVReaderTest {
     CSVReader.handle(argsName);
   }
 
+  @Test
+  public void whenFilterFiveColumns() throws Exception {
+    String data = String.join(
+        System.lineSeparator(),
+        "name;age;last_name;re;education",
+        "Tom;20;Smith;re;Bachelor",
+        "Jack;25;Johnson;re;Undergraduate",
+        "William;30;Brown;re;Secondary special"
+    );
+    File file = temporaryFolder.newFile("source.csv");
+    File target = temporaryFolder.newFile("target.csv");
+    ArgsName argsName = ArgsName.of(new String[]{
+        "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=education"
+    });
+    Files.writeString(file.toPath(), data);
+    String expected = String.join(
+        System.lineSeparator(),
+        "education",
+        "Bachelor",
+        "Undergraduate",
+        "Secondary special"
+    ).concat(System.lineSeparator());
+    CSVReader.handle(argsName);
+    Assert.assertEquals(expected, Files.readString(target.toPath()));
+  }
 }

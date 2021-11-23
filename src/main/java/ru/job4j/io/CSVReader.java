@@ -43,17 +43,18 @@ public class CSVReader {
 
   private static List<List<String>> getResultAfterFilter(List<String> tableIndex, List<String> result, List<Integer> indexes) {
     List<List<String>> temp = new ArrayList<>();
+    int count = tableIndex.size();
     for (int i = 0; i < indexes.size(); i++) {
       int finalI = i;
       if (indexes.get(finalI) == 0) {
         List<String> a = IntStream.range(0, result.size())
-            .filter(n -> n % 4 == 0)
+            .filter(n -> n % count == 0)
             .mapToObj(result::get)
             .collect(Collectors.toList());
         temp.add(a);
       } else {
         List<String> a = IntStream.range(0, result.size())
-            .filter(n -> (n + tableIndex.size() - indexes.get(finalI)) % 4 == 0)
+            .filter(n -> (n + tableIndex.size() - indexes.get(finalI)) % count == 0)
             .mapToObj(result::get)
             .collect(Collectors.toList());
         temp.add(a);

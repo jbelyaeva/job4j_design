@@ -27,7 +27,7 @@ public class ArgsName {
       if (res.length != 2 || res[0].length() < 2 || res[1].length() == 0) {
         throw new IllegalArgumentException("Not found any arguments");
       }
-      values.put(res[0].split("-")[1], res[1]);
+      values.put(res[0].substring(1), res[1]);
     }
   }
 

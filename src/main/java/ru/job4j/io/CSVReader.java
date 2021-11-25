@@ -37,7 +37,6 @@ public class CSVReader {
       }
       builder.setLength(builder.length() - 1);
       builder.append(System.lineSeparator());
-      builder.setLength(builder.length() - 2);
     }
     return builder;
   }

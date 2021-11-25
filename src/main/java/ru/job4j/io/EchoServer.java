@@ -17,7 +17,7 @@ public class EchoServer {
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()))) {
           String word = in.readLine().substring(6).split(" ")[0];
-          if (word.equals("msg=Bye")) {
+          if (("msg=Bye").equals(word)) {
             server.close();
           }
           out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());

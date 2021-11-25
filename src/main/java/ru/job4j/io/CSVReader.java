@@ -21,7 +21,7 @@ public class CSVReader {
     List<Integer> indexes = parseFilter(argsName, tableIndex);
     List<List<String>> mas = getResultAfterFilter(tableIndex, result, indexes);
     StringBuilder builder = getStringBuilder(mas);
-    if (argsName.get("out").equals("stdout")) {
+    if (("stdout").equals(argsName.get("out"))) {
       recordInConsole(builder);
     } else {
       recordInFile(argsName.get("out"), builder);
@@ -37,11 +37,13 @@ public class CSVReader {
       }
       builder.setLength(builder.length() - 1);
       builder.append(System.lineSeparator());
+      builder.setLength(builder.length() - 2);
     }
     return builder;
   }
 
-  private static List<List<String>> getResultAfterFilter(List<String> tableIndex, List<String> result, List<Integer> indexes) {
+  private static List<List<String>> getResultAfterFilter(List<String> tableIndex,
+      List<String> result, List<Integer> indexes) {
     List<List<String>> temp = new ArrayList<>();
     int count = tableIndex.size();
     for (int i = 0; i < indexes.size(); i++) {

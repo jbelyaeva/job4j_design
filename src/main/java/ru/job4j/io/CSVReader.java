@@ -1,10 +1,13 @@
 package ru.job4j.io;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -109,13 +112,15 @@ public class CSVReader {
 
   private static List<String> getStringsFromFile(ArgsName argsName) {
     List<String> scannerResult = new ArrayList<>();
-    try (Scanner scanner = new Scanner(Paths.get(argsName.get("path")).toFile())
-        .useDelimiter(argsName.get("delimiter"))) {
+
+    try (BufferedReader br = new BufferedReader(new FileReader(argsName.get("path"),
+        StandardCharsets.UTF_8))) {
+      Scanner scanner = new Scanner(br).useDelimiter(argsName.get("delimiter"));
       while (scanner.hasNext()) {
         scannerResult.add(scanner.next());
       }
-    } catch (IOException ex) {
-      ex.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return scannerResult;
   }

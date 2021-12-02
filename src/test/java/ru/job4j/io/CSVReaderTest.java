@@ -4,7 +4,6 @@ package ru.job4j.io;
 import java.io.File;
 import java.nio.file.Files;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -15,7 +14,6 @@ public class CSVReaderTest {
   public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
   @Test
-  @Ignore
   public void whenFilterTwoColumns() throws Exception {
     String data = String.join(
         System.lineSeparator(),
@@ -43,7 +41,6 @@ public class CSVReaderTest {
   }
 
   @Test
-  @Ignore
   public void whenFilterTreeColumns() throws Exception {
     String data = String.join(
         System.lineSeparator(),
@@ -71,7 +68,6 @@ public class CSVReaderTest {
   }
 
   @Test
-  @Ignore
   public void whenFilterOneColumns() throws Exception {
     String data = String.join(
         System.lineSeparator(),
@@ -99,7 +95,6 @@ public class CSVReaderTest {
   }
 
   @Test
-  @Ignore
   public void whenFilterChangeColumns() throws Exception {
     String data = String.join(
         System.lineSeparator(),
@@ -127,25 +122,6 @@ public class CSVReaderTest {
   }
 
   @Test
-  @Ignore
-  public void whenFilterTwoColumnsInConsole() throws Exception {
-    String data = String.join(
-        System.lineSeparator(),
-        "name;age;last_name;education",
-        "Tom;20;Smith;Bachelor",
-        "Jack;25;Johnson;Undergraduate",
-        "William;30;Brown;Secondary special"
-    );
-    File file = temporaryFolder.newFile("source.csv");
-    ArgsName argsName = ArgsName.of(new String[]{
-        "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=stdout", "-filter=name,age"
-    });
-    Files.writeString(file.toPath(), data);
-    CSVReader.handle(argsName);
-  }
-
-  @Test
-  @Ignore
   public void whenFilterFiveColumns() throws Exception {
     String data = String.join(
         System.lineSeparator(),

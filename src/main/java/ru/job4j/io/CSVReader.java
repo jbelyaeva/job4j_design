@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -18,12 +18,13 @@ public class CSVReader {
 
   public static void handle(ArgsName argsName) {
     validations(argsName, 4);
-    List<String> scannerResult = getStringsFromFile(argsName);
-    List<String> tableIndex = getTableFields(scannerResult);
-    List<String> result = prepareScannerResultForWork(scannerResult);
-    List<Integer> indexes = parseFilter(argsName, tableIndex);
-    List<List<String>> mas = getResultAfterFilter(tableIndex, result, indexes);
-    StringBuilder builder = getStringBuilder(mas);
+    List<List<String>> scannerResult = getStringsFromFile(argsName);
+    List<String> tableFields = scannerResult.get(1);
+    List<String> dataTable = scannerResult.get(0);
+    List<Integer> indexes = parseFilter(argsName, tableFields);
+    List<String> fieldsForResult = getFieldsForResult(tableFields, indexes);
+    List<List<String>> mas = getResultAfterFilter(tableFields, dataTable, indexes);
+    StringBuilder builder = getStringBuilder(mas, fieldsForResult);
     if (("stdout").equals(argsName.get("out"))) {
       recordInConsole(builder);
     } else {
@@ -31,8 +32,14 @@ public class CSVReader {
     }
   }
 
-  private static StringBuilder getStringBuilder(List<List<String>> mas) {
+  private static StringBuilder getStringBuilder(List<List<String>> mas, List<String> fields) {
     StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < fields.size(); i++) {
+      builder.append(fields.get(i));
+      builder.append(";");
+    }
+    builder.setLength(builder.length() - 1);
+    builder.append(System.lineSeparator());
     for (int i = 0; i < mas.get(0).size(); i++) {
       for (int j = 0; j < mas.size(); j++) {
         builder.append(mas.get(j).get(i));
@@ -44,10 +51,10 @@ public class CSVReader {
     return builder;
   }
 
-  private static List<List<String>> getResultAfterFilter(List<String> tableIndex,
+  private static List<List<String>> getResultAfterFilter(List<String> tableField,
       List<String> result, List<Integer> indexes) {
     List<List<String>> temp = new ArrayList<>();
-    int count = tableIndex.size();
+    int count = tableField.size();
     for (int i = 0; i < indexes.size(); i++) {
       int finalI = i;
       if (indexes.get(finalI) == 0) {
@@ -58,7 +65,7 @@ public class CSVReader {
         temp.add(a);
       } else {
         List<String> a = IntStream.range(0, result.size())
-            .filter(n -> (n + tableIndex.size() - indexes.get(finalI)) % count == 0)
+            .filter(n -> (n + tableField.size() - indexes.get(finalI)) % count == 0)
             .mapToObj(result::get)
             .collect(Collectors.toList());
         temp.add(a);
@@ -81,48 +88,35 @@ public class CSVReader {
     return indexes;
   }
 
-  private static List<String> prepareScannerResultForWork(List<String> scannerResult) {
-    List<String> result = new ArrayList<>();
-    for (int i = 0; i < scannerResult.size(); i++) {
-      String temp = scannerResult.get(i);
-      if (temp.contains("\r\n")) {
-        String[] a = temp.split("\r\n");
-        result.add(a[0]);
-        result.add(a[1]);
-      } else {
-        result.add(temp);
-      }
+  private static List<String> getFieldsForResult(List<String> tableFields, List<Integer> indexes) {
+    List<String> fields = new ArrayList<>();
+    for (int i = 0; i < indexes.size(); i++) {
+      fields.add(tableFields.get(indexes.get(i)));
     }
-    return result;
+    return fields;
   }
 
-  private static List<String> getTableFields(List<String> scannerResult) {
-    List<String> tempMas = new ArrayList<>();
-    for (int i = 0; i < scannerResult.size(); i++) {
-      String temp = scannerResult.get(i);
-      if (!temp.contains("\r\n")) {
-        tempMas.add(temp);
-      } else {
-        tempMas.add(temp.split("\r\n")[0]);
-        break;
-      }
-    }
-    return tempMas;
-  }
-
-  private static List<String> getStringsFromFile(ArgsName argsName) {
+  private static List<List<String>> getStringsFromFile(ArgsName argsName) {
     List<String> scannerResult = new ArrayList<>();
-
+    List<String> tableFields = new ArrayList<>();
     try (BufferedReader br = new BufferedReader(new FileReader(argsName.get("path"),
         StandardCharsets.UTF_8))) {
       Scanner scanner = new Scanner(br).useDelimiter(argsName.get("delimiter"));
-      while (scanner.hasNext()) {
-        scannerResult.add(scanner.next());
+      if (scanner.hasNextLine()) {
+        String[] headers = scanner.nextLine().split(argsName.get("delimiter"));
+        tableFields.addAll(Arrays.asList(headers));
+        while (scanner.hasNextLine()) {
+          String[] lines = scanner.nextLine().split(argsName.get("delimiter"));
+          scannerResult.addAll(Arrays.asList(lines));
+        }
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return scannerResult;
+    List<List<String>> res = new ArrayList<>();
+    res.add(scannerResult);
+    res.add(tableFields);
+    return res;
   }
 
   private static void recordInFile(String target, StringBuilder builder) {

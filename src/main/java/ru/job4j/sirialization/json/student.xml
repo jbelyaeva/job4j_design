@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<person id="18" name="Вася" surname="Васин" isBlock="false">
+  <group id="1" code="K78js" description="какая-то информация">
+  </group>
+  <subjects>
+    <subject>"Математика"</subject>
+    <subject>"Русский"</subject>
+  </subjects>
+</person>

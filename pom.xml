@@ -126,12 +126,14 @@
               <finalName>Search</finalName>
               <finalName>Zip</finalName>
               <finalName>CSVReader</finalName>
+              <finalName>SearchProgram</finalName>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>ru.job4j.io.duplicates.DuplicatesFinder</mainClass>
                   <mainClass>ru.job4j.io.Search</mainClass>
                   <mainClass>ru.job4j.io.Zip</mainClass>
                   <mainClass>ru.job4j.io.CSVReader</mainClass>
+                  <mainClass>ru.job4j.io.search.SearchProgram</mainClass>
                 </transformer>
               </transformers>
             </configuration>

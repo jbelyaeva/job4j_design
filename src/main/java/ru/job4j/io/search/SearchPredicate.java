@@ -2,10 +2,8 @@ package ru.job4j.io.search;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ru.job4j.io.ArgsName;
-import ru.job4j.sirialization.json.B;
 
 public class SearchPredicate {
 
@@ -13,13 +11,13 @@ public class SearchPredicate {
 
   public Predicate<Path> getPredicate(ArgsName argsName) {
 
-    if (argsName.get("t").equals("name")) {
+    if (("name").equals(argsName.get("t"))) {
       predicate = p -> p.toFile().getName().equals(argsName.get("n"));
     }
-    if (argsName.get("t").equals("mask")) {
+    if (("mask").equals(argsName.get("t"))) {
       predicate = foundRegex(getMask(argsName));
     }
-    if (argsName.get("t").equals("regex")) {
+    if (("regex").equals(argsName.get("t"))) {
       predicate = foundRegex(argsName.get("n"));
     }
     return predicate;
@@ -32,10 +30,15 @@ public class SearchPredicate {
     } else {
       if (mask.contains("?.")) {
         mask = mask.replace("?", ".*\\") + "$";
+      }
+      if (mask.startsWith("?")) {
+        mask = mask.replace("?", "[^ ]{0,}") + "$";
       } else {
         throw new IllegalArgumentException(
-            "Mask is wrong. You need to write, for example, *.txt, for searching all files. "
-                + " You need to write, for example, res?.txt, for searching all files, which start on 'res'.");
+            "Mask is wrong. Examples: "
+                + "1. You need to write *.txt for searching all files. "
+                + "2. You need to write res?.txt for searching all files, which started on 'res'. "
+                + "3. You need to write ?t.txt for searching all files, which finished on 't'. ");
       }
     }
     return mask;

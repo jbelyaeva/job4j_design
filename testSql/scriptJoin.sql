@@ -35,6 +35,27 @@ insert into lesson (title, description, published, created_at, course_id) values
 ('урок1','не знаю что',false,'2022-01-15', 5);
 
 
-select c.title, l.title, l.description from course as c inner join lesson as l on c.id=l.course_id;
-select c.title as "Название курса", l.title as "Название урока", l.description as "Описание" from course as c inner join lesson as l on c.id=l.course_id;
-select c.title, l.title, l.description from course as c inner join lesson as l on c.id=l.course_id and l.published=false;
+select
+c.title,
+l.title,
+l.description
+from course as c
+inner join lesson as l
+on c.id=l.course_id;
+
+select
+c.title as "Название курса",
+l.title as "Название урока",
+l.description as "Описание"
+from course as c
+inner join lesson as l
+on c.id=l.course_id;
+
+select
+c.title,
+l.title,
+l.description
+from course as c
+inner join lesson as l
+on c.id=l.course_id
+and l.published=false;

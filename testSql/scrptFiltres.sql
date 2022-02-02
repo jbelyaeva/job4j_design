@@ -62,7 +62,7 @@ p.expired_date
 from product as p
 inner join type as t
 on p.type_id=t.id
-and p.expired_date<'2022-02-01';
+and p.expired_date< current_date;
 
 select
 p.name,

@@ -50,40 +50,19 @@ insert into  car (name, body_id, motor_id, transmission_id ) values
 ('Машина8', 1, 2, 2),
 ('Машина9', 1, 1, 1);
 
-
- select
- tableBody.id,
- tableBody.car,
- tableBody.body,
- tableMotor.motor,
- tableTrans.transmission
- from
- (select
+select
  c.id,
  c.name as car,
- b.name as body
- from car c
- left join body b
- on c.body_id = b.id) tableBody,
- (
- select
- c.id,
- c.name as car,
- m.name as motor
- from car c
- left join motor m
- on c.motor_id = m.id) tableMotor,
- (
- select
- c.id,
- c.name as car,
+ b.name as body,
+ m.name as motor,
  t.name as transmission
  from car c
+ left join body b
+ on c.body_id = b.id
+ left join motor m
+ on c.motor_id = m.id
  left join transmission t
- on c.transmission_id = t.id) tableTrans
- where
- tableBody.id = tableMotor.id
- and tableBody.id = tableTrans.id;
+ on c.transmission_id = t.id
 
  select
  b.name as body

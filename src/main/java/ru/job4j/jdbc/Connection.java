@@ -7,9 +7,9 @@ import ru.job4j.io.Config;
 
 public class Connection {
   public static void main(String[] args) throws ClassNotFoundException, SQLException {
-    Class.forName("org.postgresql.Driver");
     Config config = new Config("./src/main/resources/app.properties");
     config.load();
+    Class.forName(config.value("driver"));
     String url = config.value("url");
     String login = config.value("login");
     String password = config.value("password");

@@ -1,6 +1,7 @@
 package ru.job4j.jdbc;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -113,9 +114,12 @@ public class TableEditor implements AutoCloseable {
 
   public static void main(String[] args) throws Exception {
     Properties properties = new Properties();
-    FileInputStream fileInputStream;
-    fileInputStream = new FileInputStream("./src/main/resources/app.properties");
-    properties.load(fileInputStream);
+    try {
+      FileInputStream fileInputStream = new FileInputStream("./src/main/resources/app.properties");
+      properties.load(fileInputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     try (TableEditor tableEditor = new TableEditor(properties)) {
       tableEditor.createTable("device");
       System.out.println(getTableScheme(tableEditor.connection, "device"));

@@ -1,7 +1,6 @@
 package ru.job4j.jdbc;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +29,7 @@ public class TableEditor implements AutoCloseable {
 
   public void createTable(String tableName) {
     String sql = String.format(
-        "create table if not exists %s(%s, %s);",
+        "create table if not exists %s(%s);",
         tableName,
         "id serial primary key"
     );
@@ -114,11 +113,9 @@ public class TableEditor implements AutoCloseable {
 
   public static void main(String[] args) throws Exception {
     Properties properties = new Properties();
-    try {
-      FileInputStream fileInputStream = new FileInputStream("./src/main/resources/app.properties");
+    try (FileInputStream fileInputStream = new FileInputStream(
+        "./src/main/resources/app.properties")) {
       properties.load(fileInputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
     }
     try (TableEditor tableEditor = new TableEditor(properties)) {
       tableEditor.createTable("device");

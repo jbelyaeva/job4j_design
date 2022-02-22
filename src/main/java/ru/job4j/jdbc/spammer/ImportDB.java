@@ -1,9 +1,7 @@
 package ru.job4j.jdbc.spammer;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -29,10 +27,7 @@ public class ImportDB {
     try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
       rd.lines().forEach(e -> {
         var str = e.split(";");
-        if (str.length != 2) {
-          throw new IllegalArgumentException("Data error");
-        }
-        if (str[0].equals("") || str[1].equals("")) {
+        if (str.length != 2 || str[0].equals("") || str[1].equals("")) {
           throw new IllegalArgumentException("Data error");
         }
         users.add(new User(str[0], str[1]));

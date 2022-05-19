@@ -8,7 +8,8 @@ on p.company_id=c.id;
 
  <!--все person, кто не в компании с id=5-->
  select
- p.name
+ p.name,
+ c.name as comp_name
  from person p, company c
  where
  p.company_id=c.id
@@ -17,25 +18,17 @@ on p.company_id=c.id;
  <!--Название компании с максимальным количеством человек + количество человек в этой компании-->
 <!--(нужно учесть, что таких компаний может быть несколько).-->
 
-select m.*
-from (select
-        c.name as nameComp,
-        count(p.*) as countInt
-        from person as p,
-             company as c
-        where p.company_id=c.id
-        group by c.name
-	    ) as m
-where m.countInt=(
 select
-    max(maxresult.countInt) as maxcountInt
-    from(
-        select
-        c.name as nameComp,
-        count(p.*) as countInt
-        from person as p,
-             company as c
-        where p.company_id=c.id
-        group by c.name
-	    ) as maxresult
-	)
+c.name as nameComp,
+count(p.*) as countInt
+from person as p,
+     company as c
+where p.company_id=c.id
+group by c.name
+having count(p.*) = (
+      select count(company_id) as countPers
+      from person
+      group by company_id
+      order by countPers DESC
+      limit 1
+)
